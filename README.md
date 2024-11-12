@@ -1,20 +1,41 @@
 This is a RESTful API built with Flask, designed to perform content moderation using OpenAI's API. The API is deployed on Vercel and can be accessed remotely. This project uses pydantic for data validation and python-dotenv for environment variable management.
 
-<h1>Features</h1>
-<b>Content Moderation</b>: Uses OpenAI's GPT model to analyze content for harmful or inappropriate material.
-<b>Vercel Deployment</b>: Hosted on Vercel for easy access and scalability.
-<b>Data Validation</b>: Ensures structured JSON output using pydantic.
+## Features
 
-1. Running Locally
-without vercel run
+- **Content Moderation**: Uses OpenAI's GPT model to analyze content for harmful or inappropriate material.
+- **Vercel Deployment**: Hosted on Vercel for easy access and scalability.
+- **Data Validation**: Ensures structured JSON output using `pydantic`.
 
-``flask run``
-Access at http://127.0.0.1:5000
+## Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/your-repo-name.git
+   cd your-repo-name
+   
+2. Install Dependencies
+   ```bash
+   pip install -r requirements.txt
+
+3. Set up environment variables by creating a ``.env file`` in the project root 
+
+## Testing
+
+1. To test the API locally:
+
+Run the Flask app with the following command:
+
+```flask run```
+
+Access the API at http://127.0.0.1:5000
 
 2. Deployment on Vercel
+   
 Install the Vercel CLI:
 
 ``npm install -g vercel``
+
 Log in to Vercel:
 
 ``vercel login``
@@ -43,26 +64,37 @@ Content-Type : "application/json"
  	"type": "sexual content"
 }
 
-
-4. API Endpoints
+## API Endpoints
 POST /analyze_content
 Analyze content for harmful or inappropriate material.
 
 Request Body
+### Request Body
 
-Parameter	Type	Description
-content	string	The text content to analyze.
-type	string	The type of content (e.g., "sexual content", "harrassment").
+The request body should be in JSON format and include the following parameters:
 
-Response
-The API returns a JSON object containing flagged categories and confidence scores for each category.
+| Parameter   | Type   | Required | Description                                 |
+|-------------|--------|----------|---------------------------------------------|
+| `content`   | string | Yes      | The text content to analyze for moderation. |
+| `type`      | string | Yes      | The type of content (e.g., "harrassment").         |
 
-Example Response:
+#### Example Request Body
 
-json
-
+```json
 {
-  "content": "Your text to analyze",
+  "content": "This is an example text to analyze.",
+  "type": "harrassment"
+}
+```
+### Response
+
+The API returns a JSON object containing the analyzed content, flagged categories, and confidence scores for each category.
+
+#### Example Response
+
+```json
+{
+  "content": "This is an example text to analyze.",
   "type": "sexual content",
   "flagged_categories": {
     "violence": 0.8,
@@ -78,8 +110,9 @@ json
     "suggestive_language": 0.4
   }
 }
+```
 Environment Variables
-Configure these environment variables in a .env file for local development and in Vercel’s dashboard for deployment:
-
-Variable	Description
-OPENAI_API_KEY	Your OpenAI API key.
+Configure these environment variables in a ```.env``` file for local development and in Vercel’s dashboard for deployment:
+| Variable   | Description   |
+|-------------|--------|
+|OPENAI_API_KEY|	Your OpenAI API key|.
