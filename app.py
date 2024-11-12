@@ -22,6 +22,11 @@ class ModerationScores(BaseModel):
     illicit_activities: float = Field(..., ge=0.0, le=1.0)
     suggestive_language: float = Field(..., ge=0.0, le=1.0)
 
+@app.route("/")
+def home():
+    print("Root route accessed")
+    return "Hello, World!"
+
 @app.route('/analyze_content', methods=['POST'])
 def analyze_content():
     data = request.json
