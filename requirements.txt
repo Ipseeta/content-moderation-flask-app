@@ -2,4 +2,3 @@ Flask
 pydantic
 python-dotenv
 openai
-dotenv
