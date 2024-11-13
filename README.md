@@ -26,8 +26,7 @@ This is a RESTful API built with Flask, designed to perform content moderation u
 
 Run the Flask app with the following command:
 
-```export FLASK_APP=api.index
-flask run```
+```export FLASK_APP=api.index flask run```
 
 Access the API at http://127.0.0.1:5000
 
