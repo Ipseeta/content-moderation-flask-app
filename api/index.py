@@ -89,20 +89,21 @@ def analyze_content():
 
         # Validate and parse the JSON output with Pydantic
         try:
-            scores = ModerationScores.parse_raw(moderation_result)
-        except ValidationError as e:
-            return jsonify({"error": "Invalid response format", "details": e.errors()}), 500
+            scores = ModerationScores.model_validate_json(moderation_result)
+        except (ValidationError, ValueError) as e:
+            # Use a consistent error message
+            return jsonify({"error": "Invalid response format", "details": str(e)}), 500
 
         # Set a threshold to flag categories
         threshold = 0.5
-        flagged_categories = {category: score for category, score in scores.dict().items() if score > threshold}
+        flagged_categories = {category: score for category, score in scores.model_dump().items() if score > threshold}
 
         # Return the results
         output = {
             "content": content,
             "type": content_type,
             "flagged_categories": flagged_categories,
-            "confidence_scores": scores.dict()
+            "confidence_scores": scores.model_dump()
         }
 
         return jsonify(output)
