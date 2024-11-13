@@ -1,0 +1,38 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Change to the branch you deploy from
+
+jobs:
+  test_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'  # Specify your Python version
+
+      - name: Install Dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip3 install -r requirements.txt
+
+      - name: Run Integration Tests
+        env:
+          # Set environment variables required for integration tests, if any
+          BASE_URL: "https://content-moderation-flask-app.vercel.app/"
+        run: |
+          pytest test_integration.py
+
+      # If tests pass, proceed to deploy
+      - name: Deploy to Production
+        if: success()
+        run: |
+          # Add your deployment command here, e.g., using Vercel CLI or any other deployment tool
+          vercel --prod
