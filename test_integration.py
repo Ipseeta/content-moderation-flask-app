@@ -6,7 +6,7 @@ def test_vercel_home():
     """Test the home route of the deployed app"""
     response = requests.get(f"{BASE_URL}/")
     assert response.status_code == 200
-    assert response.text == "Hello, World!"
+    assert "<h1>Content Moderation Checker</h1>" in response.text
 
 def test_vercel_analyze_content_valid_request():
     """Test the analyze_content endpoint on Vercel with a valid request"""

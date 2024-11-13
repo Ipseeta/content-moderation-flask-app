@@ -1,0 +1,32 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Content Moderation</title>
+    <script src="/static/script.js" defer></script>
+</head>
+<body>
+    <h1>Content Moderation Checker</h1>
+    <form id="moderationForm">
+        <label for="content">Enter Content:</label><br>
+        <textarea id="content" name="content" rows="4" cols="50" required></textarea><br><br>
+
+        <label for="type">Content Type:</label><br>
+        <select id="type" name="type" required>
+            <option value="violence">Violence</option>
+            <option value="sexual content">Sexual Content</option>
+            <option value="hate speech">Hate Speech</option>
+            <option value="self-harm">Self-Harm</option>
+            <option value="harassment">Harassment</option>
+            <option value="illicit activities">Illicit Activities</option>
+            <option value="suggestive language">Suggestive Language</option>
+        </select><br><br>
+
+        <button type="button" onclick="submitForm()">Check Content</button>
+    </form>
+
+    <h2>Moderation Results:</h2>
+    <div id="results"></div>
+</body>
+</html>

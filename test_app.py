@@ -11,21 +11,21 @@ def client():
 # Test cases
 
 def test_home_route(client):
-    """Test the home route for a successful response"""
+    """Test the home route for a successful response and HTML content"""
     response = client.get("/")
     assert response.status_code == 200
-    assert response.data == b"Hello, World!"
+    assert b"<h1>Content Moderation Checker</h1>" in response.data  # Check if page title is present
 
 def test_analyze_content_missing_content(client):
-    """Test analyze_content endpoint with missing content"""
-    response = client.post("/analyze_content", json={"type": "text"})
+    """Test analyze_content endpoint with missing content in form data"""
+    response = client.post("/analyze_content", json={"type": "text"})  # Only type is provided, content is missing
     data = response.get_json()
     assert response.status_code == 400
     assert data["error"] == "Content is required"
 
 def test_analyze_content_missing_type(client):
-    """Test analyze_content endpoint with missing type"""
-    response = client.post("/analyze_content", json={"content": "Test content"})
+    """Test analyze_content endpoint with missing type in form data"""
+    response = client.post("/analyze_content", json={"content": "Test content"})  # Only content is provided, type is missing
     data = response.get_json()
     assert response.status_code == 400
     assert data["error"] == "Content type is required"

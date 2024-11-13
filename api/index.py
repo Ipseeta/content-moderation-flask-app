@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from openai import OpenAI
 from dotenv import load_dotenv
 from pydantic import BaseModel, ValidationError, Field
@@ -22,10 +22,9 @@ class ModerationScores(BaseModel):
     illicit_activities: float = Field(..., ge=0.0, le=1.0)
     suggestive_language: float = Field(..., ge=0.0, le=1.0)
 
-@app.route("/")
+@app.route('/')
 def home():
-    print("Root route accessed")
-    return "Hello, World!"
+    return render_template('index.html')
 
 @app.route('/analyze_content', methods=['POST'])
 def analyze_content():
@@ -44,7 +43,7 @@ def analyze_content():
     try:
         # Use OpenAI's chat model to analyze the content with client instance
         response = client.chat.completions.create(
-            model="gpt-4o-2024-08-06",  # Specify the chat model
+            model="gpt-4",  # Specify the chat model
             messages=[
                 {
                     "role": "system",
