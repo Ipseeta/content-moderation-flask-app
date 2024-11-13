@@ -48,21 +48,31 @@ Vercel will generate a public URL where the API is accessible.
 
 3. Testing:
 
+```
 curl -X POST "https://your-vercel-deployment-url/api/analyze_content" \
   -H "Content-Type: application/json" \
   -d '{
         "content": "Your text to analyze",
         "type": "harrassment"
       }'
-
+```
 Postman Post request to test
 https://content-moderation-flask-app.vercel.app/analyze_content
 
+```
 Content-Type : "application/json"
 {
 	"content": "This message suggests actions that could lead to physical harm if followed.",
  	"type": "sexual content"
 }
+```
+
+--> Run Unit Tests Locally:
+  ```pytest test_app.py```
+
+--> Run Integration Tests on Deployed API: 
+Make sure you replace BASE_URL with your actual Vercel deployment URL in the integration tests.
+  ```pytest test_integration.py```
 
 ## API Endpoints
 POST /analyze_content
